@@ -16,7 +16,6 @@ import java.time.LocalDateTime;
 //audit을 이용하면 자동으로 시간을 매핑하여 데이터베이스의 테이블에 넣어줘야함.
 
 @Getter
-
 @MappedSuperclass//JPA 엔티티 클래스들이 해당 클래스를 상속할경우 해당 클래스의 필드들도 엔티티로 인식하게한다.
 @EntityListeners(AuditingEntityListener.class) //BaseTimeEntity클래스에 Auditing 기능을 포함시킨다.
 public class BaseTimeEntity {
