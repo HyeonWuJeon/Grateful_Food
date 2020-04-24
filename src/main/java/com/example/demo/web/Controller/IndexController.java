@@ -1,17 +1,16 @@
 package com.example.demo.web.Controller;
 
 import com.example.demo.config.auth.dto.SessionUser;
-import com.example.demo.domain.Store;
 import com.example.demo.repository.CommentRepository;
 import com.example.demo.repository.OrderRepository;
 import com.example.demo.service.CategoryService;
 
 import com.example.demo.service.FoodService;
-import com.example.demo.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 
 import javax.servlet.http.HttpSession;
@@ -29,36 +28,35 @@ public class IndexController {
 
     /**
      * 모든 카테고리 뿌려준다
+     * @return
      */
+//    @RequestMapping(value = "/")
+//    public String index() {
+//        return "index";
+//    }
 
-
-
-
-
-
-
-    @GetMapping("/")
-    public String index(Model model) {
-
+//    @GetMapping("/test")
+//    public IndexController index(Model model) {
+//
+//        return this;
+//    }
         /**
          * List 형태반환
          */
-        model.addAttribute("category", categoryService.findAllDesc());
-
-
-        //CustomOAuth2UserService에서 로그인 성공시 세션에 SessionUser를 저장하도록 구성함.
-        //즉 로그인 성공시 httpSession.getAttribute("user")에서 값을 가져올수 있다.
-
-        SessionUser user = (SessionUser) httpSession.getAttribute("user"); //세션값을 가져오는 부분
-
-        if (user != null) { // 세션에 저장된 값이 있을때만 model에 userName으로 등록한다.
-            //세션에 저장된 값이 없으면 model엔 아무런 값이 없는 상태이니 로그인 버튼이 보인다.
-            model.addAttribute("userName", user.getName());
-        }
-
-        return "App"; //index.mustache로 자동 변환되어 반환한다.
-
-    }
+//        model.addAttribute("category_name", categoryService.findAllDesc());
+//
+//
+////        CustomOAuth2UserService에서 로그인 성공시 세션에 SessionUser를 저장하도록 구성함.
+////        즉 로그인 성공시 httpSession.getAttribute("user")에서 값을 가져올수 있다.
+//
+//        SessionUser user = (SessionUser) httpSession.getAttribute("user"); //세션값을 가져오는 부분
+//
+//        if (user != null) { // 세션에 저장된 값이 있을때만 model에 userName으로 등록한다.
+//            //세션에 저장된 값이 없으면 model엔 아무런 값이 없는 상태이니 로그인 버튼이 보인다.
+//            model.addAttribute("userName", user.getName());
+//        }
+//
+//    }
 
 
     /**

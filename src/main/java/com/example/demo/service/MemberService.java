@@ -62,13 +62,6 @@ public class MemberService {
         m.update(requestDto.getPassword());
     }
 
-
-
-
-
-
-
-
     @Transactional(readOnly =  true)
     public List<Member> findMembers() {
         return memberRepository.findAll();

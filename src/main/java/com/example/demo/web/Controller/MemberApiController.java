@@ -49,14 +49,14 @@ public class MemberApiController {
 
     //비밀번호 아이디 체크 후 로그인
     @ResponseBody
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/check_login", method = RequestMethod.POST)
     public String check_id(@RequestBody HashMap<String, Object> map) {
         String result = memberService.Check_Login(map.get("email"), map.get("password"));
         return result;
     }
 
     //로그아웃
-    @RequestMapping(value = "/logout", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/logout", method = RequestMethod.POST)
     public void logout(HttpServletRequest request) {
         HttpSession session = request.getSession();
 

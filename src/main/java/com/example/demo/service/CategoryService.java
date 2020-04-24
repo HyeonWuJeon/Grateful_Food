@@ -19,7 +19,7 @@ public class CategoryService {
 
 
     @Transactional(readOnly = true)
-    public List<CategoryListResponseDto> findAllDesc(){
+    public List<CategoryListResponseDto> findAllDesc(){ //list
         return categoryRepository.findAllDesc().stream().map(CategoryListResponseDto::new).collect(Collectors.toList());
     }
 }
