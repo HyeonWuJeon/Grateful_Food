@@ -3,11 +3,13 @@ package com.example.demo.service;
 
 
 
+import com.example.demo.domain.Comments;
 import com.example.demo.domain.Food;
 import com.example.demo.domain.Store;
 import com.example.demo.repository.FoodRepository;
 
 import com.example.demo.repository.StoreRepository;
+import com.example.demo.web.Response.CommentResponseDto;
 import com.example.demo.web.Response.FoodListResponseDto;
 import com.example.demo.web.Response.StoreListResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -47,6 +49,14 @@ public class FoodService {
             }
         }
         return new StoreListResponseDto(store);
+    }
+
+    //    //띄우기
+    public FoodListResponseDto findById(Long id){
+        Food entity = foodRepository.findById(id)
+                .orElseThrow(()->new IllegalArgumentException("수량이 없습니다. id="+ id));
+
+        return new FoodListResponseDto(entity);
     }
 
 }

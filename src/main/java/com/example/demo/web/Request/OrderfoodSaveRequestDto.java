@@ -11,7 +11,7 @@ import sun.text.resources.cldr.ti.FormatData_ti_ER;
 public class OrderfoodSaveRequestDto {
     private int stockQuantity;
     private int orderprice;
-
+    private Food food;
         @Builder
         public OrderfoodSaveRequestDto(int stockQuantity ,int orderprice){
             this.stockQuantity = stockQuantity;
@@ -20,6 +20,7 @@ public class OrderfoodSaveRequestDto {
         //builder로 값을 전달해준다.
         public Orderfood toEntity(){
             return Orderfood.builder()
+                    .food(food)
                     .stockQuantity(stockQuantity)
                     .orderprice(orderprice)
                     .build();

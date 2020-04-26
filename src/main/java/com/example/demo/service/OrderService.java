@@ -6,6 +6,7 @@ import com.example.demo.domain.*;
 import com.example.demo.exception.NotEnoughStockException;
 import com.example.demo.repository.*;
 import com.example.demo.web.Request.OrderSaveRequestDto;
+import com.example.demo.web.Response.FoodListResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +29,7 @@ public class OrderService {
 
     /**
      * 주문 / 취소 / 검색 로직을 담겨 있습니다.
+     *
      */
 
 
@@ -35,23 +37,23 @@ public class OrderService {
      * 장바구니에서 order저장
      */
     @Transactional
-    public Long order(OrderSaveRequestDto orderSaveRequestDto) {
-        return orderRepository.save(orderSaveRequestDto.toEntity()).getId();
+    public Order order(OrderSaveRequestDto orderSaveRequestDto) {
+        return orderRepository.save(orderSaveRequestDto.toEntity());
 
     }
 
-    //orderfood매핑하기
     @Transactional
-    public void saveOrderfood(Long id, Food food){
+    public void saveOrderfood(Long id, List<Food> food, List<Integer> stock){
         Order order = orderRepository.findOne(id);
-        Orderfood orderfood = Orderfood.createOrderfood(food,order); //대량으로 엮어줘야한다.
 
-        order.addOrderFood(orderfood); //이것도 사실 필요없음.
-//        for(Orderfood orderfoods : orders){
+        for(int k =0; k<food.size();k++) {
+            Orderfood orderfood = Orderfood.createOrderfood(food.get(k), order, stock.get(k)); //List로 엮어줘야한다.
+            orderfoodRepository.save(orderfood);
+        }
+//        order.addOrderFood(orderfood);
+//        for(Orderfood orderfoods : order){
 //            order.addOrderFood(orderfoods);
 //        }
-        orderfoodRepository.save(orderfood);
-
     }
 
 
@@ -69,7 +71,7 @@ public class OrderService {
         order.SetCancle_DeliveryStatus(DeliveryStatus.CANCEL);
 
 
-        for(Orderfood orderfood : order.getOrderfoods()) {
+      for(Orderfood orderfood : order.getOrderfoods()) {
             System.out.println("orderfood id값 : "+orderfood.getId().getClass());
             orderfoodRepository.deleteById(orderfood.getId()); //삭제
             orderfoodRepository.deleteAll();

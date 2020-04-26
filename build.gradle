@@ -81,12 +81,21 @@ dependencies {
 	compile("org.springframework.boot:spring-boot-starter-security")
 	compile('org.springframework.session:spring-session-jdbc')
 
+//	query - dsl
+	compile("com.querydsl:querydsl-core:4.2.1")
+	compile("com.querydsl:querydsl-apt:4.2.1")
+	compile("com.querydsl:querydsl-jpa:4.2.1")
+	compile("com.querydsl:querydsl-collections:4.2.1")
+
+
 	testCompile group: 'org.jacoco', name: 'org.jacoco.agent', version: '0.8.4'
 
 
 	compileOnly 'org.projectlombok:lombok'
-	compile 'mysql:mysql-connector-java'
-//	runtime('mysql:mysql-connector-java')
+//	compile 'mysql:mysql-connector-java'
+
+	compile 'com.h2database:h2'
+	runtime('mysql:mysql-connector-java')
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 

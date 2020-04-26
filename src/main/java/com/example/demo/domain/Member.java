@@ -18,10 +18,10 @@ public class Member extends BaseTimeEntity {
         @Column(name = "member_id")
         private Long id;
 
-//        @Column(nullable = false)
+        @Column(nullable = false)
         private String name;
 
-//        @Column(nullable = false)
+        @Column(nullable = false)
         private String email;
         @Column
         private String picture;
@@ -36,7 +36,8 @@ public class Member extends BaseTimeEntity {
         private Coupon coupon;
 
         @Enumerated(EnumType.STRING)
-        @Column
+        @Column(nullable = false)
+
         private Role role;
 
         @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)

@@ -1,11 +1,11 @@
 package com.example.demo.domain;
 
 import com.example.demo.exception.NotEnoughStockException;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.example.demo.repository.OrderfoodRepository;
+import com.example.demo.web.Response.FoodListResponseDto;
+import lombok.*;
 import org.hibernate.mapping.Join;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -43,17 +43,18 @@ public class Orderfood extends BaseTimeEntity {
     @JoinColumn(name = "order_id")
     private Order order;
 
-    private int orderprice; //어떻게 계산할것인가
+    private int orderprice;
     private int stockQuantity;
     private  int discount; //어떻게 계산할것인가
 
 
-    public static Orderfood createOrderfood(Food food, Order order) {
+    public static Orderfood createOrderfood(Food food, Order order, int stock) {
         Orderfood orderfood = new Orderfood();
-        orderfood.setOrderprice(food.getPrice());
-        orderfood.Orderfood_Food(food);
+        orderfood.setStockQuantity(stock);
         orderfood.Orderfood_Order(order);
 
+        orderfood.Orderfood_Food(food);
+        orderfood.setOrderprice(food.getPrice());
 
         return orderfood;
 
@@ -85,7 +86,8 @@ public class Orderfood extends BaseTimeEntity {
 
 
     @Builder
-    public Orderfood(int stockQuantity, int orderprice) {
+    public Orderfood(Food food,int stockQuantity, int orderprice) {
+        this.food = food;
         this.stockQuantity=stockQuantity;
         this.orderprice = orderprice;
     }

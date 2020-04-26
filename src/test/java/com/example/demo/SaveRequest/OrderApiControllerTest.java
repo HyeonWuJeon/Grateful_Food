@@ -6,6 +6,8 @@ import com.example.demo.repository.*;
 import com.example.demo.service.CommentService;
 import com.example.demo.service.OrderService;
 import com.example.demo.web.Request.OrderSaveRequestDto;
+import com.example.demo.web.Request.OrderfoodSaveRequestDto;
+import io.swagger.models.auth.In;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,12 +15,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -26,6 +32,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Transactional
+@Rollback(false)
 public class OrderApiControllerTest {
 
 
@@ -44,6 +51,8 @@ public class OrderApiControllerTest {
     @Autowired
     private FoodRepository foodRepository;
 
+    @Autowired
+    private OrderRepository2 orderRepository2;
 
 //    @After
 //    public void tearDown() throws Exception{
@@ -63,12 +72,15 @@ public class OrderApiControllerTest {
 
         //멤버 한명이 음식 3개를 주문한다
         Member member = memberRepository.findOne(1L);
-        System.out.println(member.getName());
-        System.out.println(member.getAddress().getStreet());
-        System.out.println(member.getAddress().getZipcode());
-        Food food = foodRepository.findOne(1L); //피자 2개
+
+        Food food = foodRepository.findOne(1L); //피자 3개
         Food food2 = foodRepository.findOne(2L); //피자 2개
         Food food3 = foodRepository.findOne(3L); //치킨 3개
+
+        List<Food> foods = new ArrayList<>();
+        foods.add(food);
+        foods.add(food2);
+        foods.add(food3);
 
 
         OrderSaveRequestDto requestDto = OrderSaveRequestDto.builder()
@@ -76,10 +88,22 @@ public class OrderApiControllerTest {
                 .member(member)
                 .build();
 
+        //food를 list로 가져온다.
+        //list로 가져온 푸드를 더해져보자. 어떻게 list로 가져올까?
+
         /**
          * order세팅 저장완료
          */
-        Long orderid = orderService.order(requestDto);
+        Order order = orderService.order(requestDto);
+        List<Integer> stock = new ArrayList<>();
+        stock.add(3);
+        stock.add(1);
+        stock.add(2);
+        orderService.saveOrderfood(order.getId(), foods, stock);
+
+        orderRepository.save(order);
+
+
 
 
 
@@ -87,9 +111,7 @@ public class OrderApiControllerTest {
          * orderfood 세팅을 어떻게 해줄까?
          */
 
-        orderService.saveOrderfood(orderid, food); //insert 쿼리문 3번
-        orderService.saveOrderfood(orderid,food2);
-        orderService.saveOrderfood(orderid,food3);
+
 
 //
 //
@@ -111,8 +133,10 @@ public class OrderApiControllerTest {
 
     @Test
     public void order_취소된다() throws Exception{
-        Order order = orderRepository.findOne(1L);
-        order.SetReady_DeliveryStatus(DeliveryStatus.READY);
-        orderService.cancle(order.getId());
+        List<Long> ids = new ArrayList<>();
+        ids.add(2L);
+        ids.add(3L);
+
+        orderRepository2.deleteAllByIdInQuery(ids);
     }
 }
