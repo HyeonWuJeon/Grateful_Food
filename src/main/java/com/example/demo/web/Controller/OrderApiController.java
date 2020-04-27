@@ -25,8 +25,7 @@ public class OrderApiController {
     @PostMapping("/api/guest/order") //주문정보저장
     public String save(@RequestBody OrderSaveRequestDto requestDto, List<Food> foods, List<Integer> stock){
 
-        Order order = orderService.order(requestDto); //member, coupon
-        orderService.saveOrderfood(order.getId(), foods,  stock); //수량, 가격, 음식정보 join
+        orderService.saveOrderfood(requestDto, foods,  stock); //수량, 가격, 음식정보 join
 
         return "YES";
     }

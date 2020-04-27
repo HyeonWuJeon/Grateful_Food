@@ -15,6 +15,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -33,27 +34,18 @@ public class OrderService {
      */
 
 
-    /**
-     * 장바구니에서 order저장
-     */
+    // 주문완료
     @Transactional
-    public Order order(OrderSaveRequestDto orderSaveRequestDto) {
-        return orderRepository.save(orderSaveRequestDto.toEntity());
-
-    }
-
-    @Transactional
-    public void saveOrderfood(Long id, List<Food> food, List<Integer> stock){
-        Order order = orderRepository.findOne(id);
+    public void saveOrderfood(OrderSaveRequestDto orderSaveRequestDto, List<Food> food, List<Integer> stock){
+        Order enter = orderRepository.save(orderSaveRequestDto.toEntity());
+        Order order = orderRepository.findOne(enter.getId());
 
         for(int k =0; k<food.size();k++) {
             Orderfood orderfood = Orderfood.createOrderfood(food.get(k), order, stock.get(k)); //List로 엮어줘야한다.
+            order.addOrderFood(orderfood);
             orderfoodRepository.save(orderfood);
         }
-//        order.addOrderFood(orderfood);
-//        for(Orderfood orderfoods : order){
-//            order.addOrderFood(orderfoods);
-//        }
+        orderRepository.save(order);
     }
 
 
@@ -63,35 +55,21 @@ public class OrderService {
     @Transactional
     public  void cancle(Long orderId) {
         Order order = orderRepository.findOne(orderId);
-//        if(order.getStatus() == DeliveryStatus.ARRIVE) {
-//            throw new IllegalStateException("출발은 상태에서는 취소 하실 수" +
-//                    "없습니다.");
-//        }
+        if(order.getStatus() == DeliveryStatus.ARRIVE) {
+            throw new IllegalStateException("출발은 상태에서는 취소 하실 수" +
+                    "없습니다.");
+        }
 
         order.SetCancle_DeliveryStatus(DeliveryStatus.CANCEL);
-
-
-      for(Orderfood orderfood : order.getOrderfoods()) {
-            System.out.println("orderfood id값 : "+orderfood.getId().getClass());
-            orderfoodRepository.deleteById(orderfood.getId()); //삭제
-            orderfoodRepository.deleteAll();
-//            orderfoodRepository.deleteById(orderfood.getId());
-//            orderfoodRepository.flush();
-            System.out.println("----------------------------------");
+        List<Long> ids = new ArrayList<>();
+        for(Orderfood orderfood: order.getOrderfoods()){
+            ids.add(orderfood.getId());
         }
+        orderfoodRepository.deleteAllByIdInQuery(ids);
     }
 
 
 
-//    @Transactional
-//    public void cancelbasketOrder(Long foodId, Long orderId) {
-//
-//        Order order = orderRepository.findOne(orderId);
-//        Food food = foodRepository.findOne(foodId); //음식이름 ,가격
-//        //주문 취소 로직
-//
-//        order.basket_cancel(order.getStockQuantity());
-//    }
 
 }
 

@@ -45,14 +45,12 @@ public class OrderApiControllerTest {
     private OrderRepository orderRepository;
     @Autowired
     private OrderService orderService;
-
+    @Autowired
+    private OrderfoodRepository orderfoodRepository;
     @Autowired
     private MemberRepository memberRepository;
     @Autowired
     private FoodRepository foodRepository;
-
-    @Autowired
-    private OrderRepository2 orderRepository2;
 
 //    @After
 //    public void tearDown() throws Exception{
@@ -61,21 +59,15 @@ public class OrderApiControllerTest {
 
     @Test
     public void order_등록된다() throws Exception{
-        /**
-         프론트에서 전송할 데이터
-         1. 멤버정보
-         2. 음식정보
-         3. 쿠폰값
-         4. 주소정보값
-         5. 수량(개개인 음식수량) 어떻게 처리할까
-         */
+
 
         //멤버 한명이 음식 3개를 주문한다
         Member member = memberRepository.findOne(1L);
 
-        Food food = foodRepository.findOne(1L); //피자 3개
-        Food food2 = foodRepository.findOne(2L); //피자 2개
-        Food food3 = foodRepository.findOne(3L); //치킨 3개
+        //3가지 음식정보
+        Food food = foodRepository.findOne(1L);
+        Food food2 = foodRepository.findOne(2L);
+        Food food3 = foodRepository.findOne(3L);
 
         List<Food> foods = new ArrayList<>();
         foods.add(food);
@@ -88,20 +80,11 @@ public class OrderApiControllerTest {
                 .member(member)
                 .build();
 
-        //food를 list로 가져온다.
-        //list로 가져온 푸드를 더해져보자. 어떻게 list로 가져올까?
-
-        /**
-         * order세팅 저장완료
-         */
-        Order order = orderService.order(requestDto);
-        List<Integer> stock = new ArrayList<>();
+        List<Integer> stock = new ArrayList<>(); //구매수량
         stock.add(3);
         stock.add(1);
         stock.add(2);
-        orderService.saveOrderfood(order.getId(), foods, stock);
-
-        orderRepository.save(order);
+        orderService.saveOrderfood(requestDto, foods, stock);
 
 
 
@@ -134,9 +117,6 @@ public class OrderApiControllerTest {
     @Test
     public void order_취소된다() throws Exception{
         List<Long> ids = new ArrayList<>();
-        ids.add(2L);
-        ids.add(3L);
-
-        orderRepository2.deleteAllByIdInQuery(ids);
+        orderService.cancle(3L);
     }
 }
