@@ -11,10 +11,10 @@ import java.util.List;
 @DiscriminatorColumn(name = "Ftype")
 @Getter
 @Embeddable
-public class Food { //builder로 값을 넘겨줘야함.
+public class Food {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // 자동으로 인덱스 ++ 만드는것
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "food_id")
     private Long id;
 
@@ -33,34 +33,6 @@ public class Food { //builder로 값을 넘겨줘야함.
        this.name = name;
        this.price = price;
    }
-
-    //    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "order_id")
-//    private Order order;
-//
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "orderfood_id")
-//    private Orderfood orderfood;
-//
-//
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "member_id")
-//    private Member member;
-
-//    public void Setfood_orderfood(Orderfood orderfood){
-//        this.orderfood = orderfood;
-//    }
-//
-//
-//
-//    public void Setfood_order(Order order){
-//        this.order = order;
-//    }
-//
-//    public void Setfood_member(Member member){
-//        this.member =member;
-//    }
-//
 
 
 }

@@ -1,15 +1,8 @@
 package com.example.demo.domain;
 
-import com.example.demo.exception.NotEnoughStockException;
-import com.example.demo.repository.OrderfoodRepository;
-import com.example.demo.web.Response.FoodListResponseDto;
 import lombok.*;
-import org.hibernate.mapping.Join;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 
 /**
@@ -29,9 +22,6 @@ public class Orderfood extends BaseTimeEntity {
     @Column(name = "orderfood_id")
     private Long id;
 
-
-//    @OneToMany(mappedBy = "orderfood")
-//    private List<Food> foods = new ArrayList<>();
     @ManyToOne
     @JoinColumn(name = "food_id")
     private Food food;

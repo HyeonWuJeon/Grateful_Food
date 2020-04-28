@@ -38,8 +38,6 @@ public class OrderApiControllerTest {
     @Autowired
     private OrderService orderService;
     @Autowired
-    private OrderfoodRepository orderfoodRepository;
-    @Autowired
     private MemberRepository memberRepository;
     @Autowired
     private FoodRepository foodRepository;
@@ -108,7 +106,6 @@ public class OrderApiControllerTest {
 
     @Test
     public void order_취소된다() throws Exception{
-        List<Long> ids = new ArrayList<>();
         orderService.cancle(3L);
     }
 }
