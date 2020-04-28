@@ -62,13 +62,14 @@ public class MemberService {
         m.update(requestDto.getPassword());
     }
 
+    //아이디찾기
     @Transactional(readOnly =  true)
     public List<Member> findMembers() {
         return memberRepository.findAll();
     }
+
     @Transactional(readOnly =  true)
     public Member findOne(Long memberId) {
-
         return memberRepository.findOne(memberId);
     }
 

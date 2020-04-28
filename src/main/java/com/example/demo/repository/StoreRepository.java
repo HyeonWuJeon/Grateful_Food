@@ -2,6 +2,7 @@ package com.example.demo.repository;
 
 
 import com.example.demo.domain.Food;
+import com.example.demo.domain.Order;
 import com.example.demo.domain.Store;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -24,15 +25,11 @@ public class StoreRepository {
     @PersistenceContext
     EntityManager em;
 
-
     @Transactional
-    public void save(Store store) {
-        em.persist(store);
+    public List<Store> findByName(String name) {
+        return em.createQuery("select s from Store s where s.name = :name", Store.class)
+                .getResultList();
     }
-    public  Store findOne(Long id) {
-        return em.find(Store.class, id);
-    }
-
     public List<Store> findStore(Store store) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Store> cq = cb.createQuery(Store.class);

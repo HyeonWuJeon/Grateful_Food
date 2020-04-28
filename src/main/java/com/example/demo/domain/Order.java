@@ -2,9 +2,6 @@ package com.example.demo.domain;
 
 
 
-import com.example.demo.exception.NotEnoughStockException;
-import com.example.demo.repository.OrderRepository;
-import com.example.demo.repository.OrderfoodRepository;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,6 +17,12 @@ public class Order extends BaseTimeEntity {
     @Id@GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
     @Column(name = "order_id")
     private Long id;
+
+    private int TotalPrice;
+
+    public void setTotalPrice(int totalPrice) {
+        TotalPrice = totalPrice;
+    }
 
     @ManyToOne(fetch = FetchType.LAZY) //member 과 order을 n:1로 매핑시킨다
     @JoinColumn(name = "member_id") //외래키생성. many에서만 생성된다.
@@ -40,7 +43,8 @@ public class Order extends BaseTimeEntity {
     private DeliveryStatus status;
 
     @Enumerated(EnumType.STRING)
-    private Coupon coupon;
+    private Coupon coupon;;
+
 
     public void setMember(Member member) {
         this.member = member; //member값을 입력받는다

@@ -19,7 +19,7 @@ public class CommentService {
 
     @Transactional
     public Long save(CommentSaveRequestDto requestDto) {
-        return commentRepository.save(requestDto.toEntity()).getId(); //바로 db에저장된다!
+        return commentRepository.save(requestDto.toEntity()).getId();
 
     }
 

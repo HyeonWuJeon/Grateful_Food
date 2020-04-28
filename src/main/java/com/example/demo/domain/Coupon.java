@@ -8,6 +8,7 @@ public enum Coupon{
     삼천원(3000);
 
     private int coupon;
+
     Coupon(int coupon){
         this.coupon = coupon;
     }

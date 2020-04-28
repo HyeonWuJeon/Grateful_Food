@@ -2,24 +2,16 @@ package com.example.demo.SaveRequest;
 
 
 import com.example.demo.domain.*;
+import com.example.demo.domain.Member;
 import com.example.demo.repository.*;
-import com.example.demo.service.CommentService;
 import com.example.demo.service.OrderService;
 import com.example.demo.web.Request.OrderSaveRequestDto;
-import com.example.demo.web.Request.OrderfoodSaveRequestDto;
-import io.swagger.models.auth.In;
-import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;

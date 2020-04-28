@@ -1,16 +1,12 @@
 package com.example.demo.repository;
 
 
-import com.example.demo.domain.Member;
+import com.example.demo.domain.*;
 import com.example.demo.domain.Order;
-import com.example.demo.domain.OrderSearch;
-import com.example.demo.domain.Store;
-import com.example.demo.web.Request.OrderSaveRequestDto;
+import com.example.demo.domain.Member;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
 
@@ -27,6 +23,7 @@ public class OrderRepository {
 
     private final EntityManager em;
 
+
     @Transactional
     public Order save(Order order) {
         em.persist(order);
@@ -38,21 +35,6 @@ public class OrderRepository {
         return em.createQuery("select o from Order o", Order.class)
                 .getResultList();
     }
-
-//    @Transactional
-//    public void delete(Order order){
-//        Assert.notNull(order, "Entity must not be null!");
-//        if(entityInformation.isNew(order)){
-//            return;
-//        }
-//    }
-//
-//    @Transactional
-//    public void deleteAll(){
-//        for(Order element : findAll()){
-//            delete(element);
-//        }
-//    }
 
 
 

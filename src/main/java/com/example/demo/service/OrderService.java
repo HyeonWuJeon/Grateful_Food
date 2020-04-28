@@ -34,20 +34,27 @@ public class OrderService {
      */
 
 
-    // 주문완료
+    /**
+     * 주문완료
+     */
     @Transactional
     public void saveOrderfood(OrderSaveRequestDto orderSaveRequestDto, List<Food> food, List<Integer> stock){
         Order enter = orderRepository.save(orderSaveRequestDto.toEntity());
         Order order = orderRepository.findOne(enter.getId());
-
+        int sum = 0;
+        int total =0;
         for(int k =0; k<food.size();k++) {
             Orderfood orderfood = Orderfood.createOrderfood(food.get(k), order, stock.get(k)); //List로 엮어줘야한다.
             order.addOrderFood(orderfood);
             orderfoodRepository.save(orderfood);
+            sum += orderfood.getOrderprice();
         }
-        orderRepository.save(order);
+        if(order.getCoupon() != null) {
+            order.setTotalPrice(sum);
+        }
+        else
+    orderRepository.save(order);
     }
-
 
     /**
      * 주문취소
@@ -67,8 +74,6 @@ public class OrderService {
         }
         orderfoodRepository.deleteAllByIdInQuery(ids);
     }
-
-
 
 
 }

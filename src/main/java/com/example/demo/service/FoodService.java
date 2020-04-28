@@ -58,7 +58,6 @@ public class FoodService {
 
         return new FoodListResponseDto(entity);
     }
-
 }
 
 //    @Transactional(readOnly = true)
