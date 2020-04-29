@@ -16,6 +16,8 @@ import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.demo.domain.Coupon.천원;
+
 
 @Service
 @Transactional(readOnly = true)
@@ -24,6 +26,7 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
     private final EntityManager em;
+
 
     /**
      * 주문 / 취소 / 검색 / 주문검색 로직을 담겨 있습니다.
@@ -35,19 +38,27 @@ public class OrderService {
      * 주문완료
      */
     @Transactional
-    public void saveOrderfood(OrderSaveRequestDto orderSaveRequestDto, List<Food> food, List<Integer> stock){
+    public void saveOrderfood(OrderSaveRequestDto orderSaveRequestDto, List<Food> food, List<Integer> stock) {
         Order enter = orderRepository.save(orderSaveRequestDto.toEntity());
         Order order = orderRepository.findOne(enter.getId());
         int sum = 0;
-        int total =0;
-        for(int k =0; k<food.size();k++) {
+        int total = 0;
+        for (int k = 0; k < food.size(); k++) {
             Orderfood orderfood = Orderfood.createOrderfood(food.get(k), order, stock.get(k)); //List로 엮어줘야한다.
             order.addOrderFood(orderfood);
 
             sum += orderfood.getOrderprice();
         }
+
+        if (order.getCoupon() != null) {
+            total = sum - order.getCoupon().getCoupon();
+            order.setTotalPrice(total);
+        } else {
             order.setTotalPrice(sum);
-           orderRepository.save(order);
+        }
+
+        orderRepository.save(order);
+
     }
 
     /**

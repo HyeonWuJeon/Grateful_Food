@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.demo.domain.Coupon.천원;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
@@ -54,6 +55,7 @@ public class OrderApiControllerTest {
         //멤버 한명이 음식 3개를 주문한다
         Member member = memberRepository.findOne(1L);
 
+        System.out.println("타입확인 : " + member.getCoupon().getClass());
         //3가지 음식정보
         Food food = foodRepository.findOne(1L);
         Food food2 = foodRepository.findOne(2L);
@@ -75,6 +77,7 @@ public class OrderApiControllerTest {
         stock.add(1);
         stock.add(2);
         orderService.saveOrderfood(requestDto, foods, stock);
+
 
 
 
@@ -106,6 +109,7 @@ public class OrderApiControllerTest {
 
     @Test
     public void order_취소된다() throws Exception{
-        orderService.cancle(3L);
+        orderService.cancle(5L);
+
     }
 }

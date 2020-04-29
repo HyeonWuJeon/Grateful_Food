@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public enum  DeliveryStatus {
 
-    READY, SHIPPING ,ARRIVE,CANCEL
+    READY, SHIPPING ,ARRIVE
 
 }
 

@@ -35,7 +35,7 @@ public class Order extends BaseTimeEntity {
     private DeliveryStatus status;
 
     @Enumerated(EnumType.STRING)
-    private Coupon coupon;;
+    private Coupon coupon;
 
     public void setTotalPrice(int totalPrice) {
         TotalPrice = totalPrice;

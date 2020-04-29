@@ -34,5 +34,7 @@ public class SerachService {
     public List<Store> StoreSearch(String name){
         List<Store> stores = storeRepository.findByName(name);
         return stores;
-    }
+
+        }
+
 }
