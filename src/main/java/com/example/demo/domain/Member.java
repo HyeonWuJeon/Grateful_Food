@@ -9,6 +9,8 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static javax.persistence.FetchType.LAZY;
+
 @Entity
 @Getter
 @NoArgsConstructor
@@ -40,7 +42,7 @@ public class Member extends BaseTimeEntity {
 
         private Role role;
 
-        @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+        @OneToMany(mappedBy = "member", fetch =LAZY)
         private List<Comments> comment = new ArrayList<>();
 
         @Builder // 값변경.
@@ -52,8 +54,6 @@ public class Member extends BaseTimeEntity {
                 this.picture = picture;
                 this.email = email;
                 this.password = password;
-
-
 
         }
 

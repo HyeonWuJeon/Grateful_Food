@@ -26,6 +26,7 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
     private final EntityManager em;
+    private final ProfitRepository profitRepository;
 
 
     /**
@@ -37,6 +38,8 @@ public class OrderService {
     /**
      * 주문완료
      */
+
+
     @Transactional
     public void saveOrderfood(OrderSaveRequestDto orderSaveRequestDto, List<Food> food, List<Integer> stock) {
         Order enter = orderRepository.save(orderSaveRequestDto.toEntity());
@@ -124,6 +127,22 @@ public class OrderService {
                 em.createQuery(cq).setMaxResults(100);
         return query.getResultList();
 
+    }
+
+
+    /**
+     * 주문승인
+     */
+    @Transactional
+    public void success(Long orderid) {
+        Order order = orderRepository.findOne(orderid);
+        int tax= 10;
+        int  total = 0;
+
+        Profit profit = new Profit();
+        profit.setProfit_total(order.getTotalPrice() * tax);
+        profit.setProfit_tax(tax);
+        profitRepository.save(profit);
     }
 
 }

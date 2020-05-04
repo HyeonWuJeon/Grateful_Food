@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.CookieValue;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 
 //Auditing : JPA에서 시간에 대해서 자동으로 값을 넣어주는 기능.
@@ -25,5 +26,7 @@ public class BaseTimeEntity {
 
     @LastModifiedDate//조회한 엔티티의 값이 변경할때 자동으로 시간을 부여함.
     private LocalDateTime modifiedDate;
+
+
 
 }

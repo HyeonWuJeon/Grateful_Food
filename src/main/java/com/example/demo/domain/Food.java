@@ -6,6 +6,8 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static javax.persistence.FetchType.LAZY;
+
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "Ftype")
@@ -22,7 +24,7 @@ public class Food {
 
     public int price;
 
-    @ManyToOne
+    @ManyToOne(fetch =LAZY)
     @JoinColumn(name = "store_id")
     private Store store;
 

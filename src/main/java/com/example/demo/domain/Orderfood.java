@@ -4,6 +4,8 @@ import lombok.*;
 
 import javax.persistence.*;
 
+import static javax.persistence.FetchType.LAZY;
+
 
 /**
  * member 과 order => 1:n 관계 한명이 여러주문을 할 수 있다.
@@ -26,10 +28,7 @@ public class Orderfood extends BaseTimeEntity {
     @JoinColumn(name = "food_id")
     private Food food;
 
-    /**
-     * Order한번에 여러주문을 넣어줄 수 있다.
-     */
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "order_id")
     private Order order;
 
@@ -59,15 +58,6 @@ public class Orderfood extends BaseTimeEntity {
         this.order = order;
     }
 
-
-
-
-
-    //총가
-
-//    public int getTotalPrice() {
-//        return getOrderprice() * getCount()-getDiscount();
-//    }
 
     /**
      * 장바구니를 control하는 함수 위의 cancel함수와 차이가있습니다.

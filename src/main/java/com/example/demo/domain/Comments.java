@@ -19,7 +19,7 @@ public class Comments extends BaseTimeEntity {
 
     //고객 주소와 이름을 가져와야한다.
     @ManyToOne
-    @JoinColumn(name = "user_id") //외래키생성. many에서만 생성된다.
+    @JoinColumn(name = "member_id") //외래키생성. many에서만 생성된다.
     private Member member;
 
     @Lob

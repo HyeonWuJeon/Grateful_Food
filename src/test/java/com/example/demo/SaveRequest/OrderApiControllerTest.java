@@ -76,6 +76,7 @@ public class OrderApiControllerTest {
         stock.add(3);
         stock.add(1);
         stock.add(2);
+
         orderService.saveOrderfood(requestDto, foods, stock);
 
 
@@ -110,6 +111,13 @@ public class OrderApiControllerTest {
     @Test
     public void order_취소된다() throws Exception{
         orderService.cancle(5L);
+
+    }
+
+
+    @Test
+    public void 승인된다() throws Exception{
+        orderService.success(5L);
 
     }
 }

@@ -10,7 +10,6 @@ insert into store(store_address, store_name,store_tel) values('부산','김밥�
 insert into store(store_address, store_name,store_tel) values('대구','도미노1호점','111-111-111');
 insert into store(store_address, store_name,store_tel) values('대구','피자헛1호점','111-111-111');
 
-
 insert into food(ftype,name,price,store_id) values('C','기환치킨',19000,1);
 insert into food(ftype,name,price,store_id) values('C','정우치킨',16000,1);
 insert into food(ftype,name,price,store_id) values('C','현우치킨',16000,2);
@@ -30,7 +29,6 @@ INSERT INTO food(ftype,name,price,store_id) values('P','현우피자',23000,7);
 insert into food(ftype,name,price,store_id) values('P','인성피자',23000,8);
 insert into food(ftype,name,price,store_id) values('P','정우피자',23000,7);
 insert into food(ftype,name,price,store_id) values('P','기환피자',23000,8);
-
 
 insert into domino(domino_taste, domino_value,food_id) values('고구마','라지',13);
 insert into domino(domino_taste, domino_value,food_id) values('포테이토','미디엄',14);

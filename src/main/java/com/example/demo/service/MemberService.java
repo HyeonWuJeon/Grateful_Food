@@ -16,6 +16,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Transactional
+
 public class MemberService {
 
     private final MemberRepository memberRepository;
